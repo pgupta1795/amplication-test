@@ -1,0 +1,48 @@
+datasource mongo {
+  provider = "mongodb"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  id        String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Action {
+  createdAt        DateTime @default(now())
+  id               String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  objectId         String
+  objectNewDetails Json?
+  objectOldDetails Json?
+  updatedAt        DateTime @updatedAt
+  userName         String
+}
+
+model Object {
+  bestAvailable      Float?
+  createdAt          DateTime @default(now())
+  description        String?
+  endItem            Boolean?
+  id                 String   @id @default(auto()) @map("_id") @mongo.ObjectId
+  objectAttributes   String?
+  sumActualMass      Float?
+  sumCalculatedMass  Float?
+  sumDesignAndRDCost Float?
+  sumEstimatedMass   Float?
+  sumToolingCost     Float?
+  sumTotalCost       Float?
+  title              String?
+  updatedAt          DateTime @updatedAt
+  url                String?
+  usage              String?
+}
